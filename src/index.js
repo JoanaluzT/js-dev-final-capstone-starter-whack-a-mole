@@ -9,7 +9,9 @@ let time = 0;
 let timer;
 let lastHole = 0;
 let points = 0;
-let difficulty = "hard";
+let difficulty = "";
+let duration = 0;
+let previousHole = '';
 
 /**
  * Generates a random integer within a range.
@@ -21,8 +23,10 @@ let difficulty = "hard";
  *
  */
 function randomInteger(min, max) {
-  // return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+  
+
 
 /**
  * Sets the time delay given a difficulty parameter.
@@ -40,10 +44,14 @@ function randomInteger(min, max) {
  *
  */
 function setDelay(difficulty) {
-  // TODO: Write your code here.
-  
+  if ( difficulty === 'hard' ) {
+    return randomInteger(600,1200);
+  }
+  if ( difficulty === 'normal') {
+    return 1000;
+  }
+  return 1500; 
 }
-
 /**
  * Chooses a random hole from a list of holes.
  *
@@ -58,9 +66,18 @@ function setDelay(difficulty) {
  * const holes = document.querySelectorAll('.hole');
  * chooseHole(holes) //> returns one of the 9 holes that you defined
  */
-function chooseHole(holes) {
-  // TODO: Write your code here.
+const randNum = (min, max) => Math.floor(Math.random() * (max - min + 1));
 
+function chooseHole(holes) {
+  // gets a hole at index of random number
+  const index = randNum(0, 8);
+  const hole = holes[index];
+  // if hole index matches previous hole, choose different hole.
+  if (hole === lastHole) {
+    return chooseHole(holes);
+  }
+  lastHole = hole;
+  return hole;
 }
 
 /**
@@ -84,9 +101,9 @@ function chooseHole(holes) {
 *
 */
 function gameOver() {
-  // TODO: Write your code here
-  
+  return ( time > 0 ) ? showUp() : stopGame();
 }
+
 
 /**
 *
@@ -98,8 +115,8 @@ function gameOver() {
 *
 */
 function showUp() {
-  let delay = 0; // TODO: Update so that it uses setDelay()
-  const hole = 0;  // TODO: Update so that it use chooseHole()
+  let delay = setDelay(difficulty);
+   const hole = chooseHole(holes);
   return showAndHide(hole, delay);
 }
 
@@ -112,13 +129,15 @@ function showUp() {
 *
 */
 function showAndHide(hole, delay){
-  // TODO: call the toggleVisibility function so that it adds the 'show' class.
-  
+  toggleVisibility(hole);
+  whackable = hole.id.substr(4);
+  whacked = false;
+  // console.log(`whackable ${whackable}`);
   const timeoutID = setTimeout(() => {
-    // TODO: call the toggleVisibility function so that it removes the 'show' class when the timer times out.
-    
+    // console.log('hide');
+    toggleVisibility(hole);
     gameOver();
-  }, 0); // TODO: change the setTimeout delay to the one provided as a parameter
+  }, delay);
   return timeoutID;
 }
 
@@ -129,10 +148,11 @@ function showAndHide(hole, delay){
 *
 */
 function toggleVisibility(hole){
-  // TODO: add hole.classList.toggle so that it adds or removes the 'show' class.
-  
+  hole.classList.toggle('show');
   return hole;
 }
+
+
 
 /**
 *
@@ -242,11 +262,25 @@ function stopGame(){
 * is clicked.
 *
 */
+let done = false;
 function startGame(){
-  //setDuration(10);
-  //showUp();
-  return "game started";
+  if ( testMode && !done ) {
+    setEventListeners();
+    done = true;
+  }
+  if ( testMode || ( time == 0 )) {
+    clearScore();
+    setDuration(10);
+    startTimer();
+    lastHole = -1;
+    showUp();
+    play();
+    return "game started";
+  }
+  return "game already running"
 }
+
+
 
 startButton.addEventListener("click", startGame);
 
