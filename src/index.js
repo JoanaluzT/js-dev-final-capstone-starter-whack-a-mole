@@ -7,11 +7,15 @@ const timerDisplay = document.querySelector("#timer");// use querySelector() to 
 
 let time = 0;
 let timer;
-let lastHole = 0;
+let lastHole = -1;
 let points = 0;
-let difficulty = "";
-let duration = 0;
-let previousHole = '';
+let difficulty = "easy";
+
+// added to changes made in test suite
+let testMode = true;
+
+let whacked = false;
+let whackable = null;
 
 /**
  * Generates a random integer within a range.
@@ -69,15 +73,19 @@ function setDelay(difficulty) {
 const randNum = (min, max) => Math.floor(Math.random() * (max - min + 1));
 
 function chooseHole(holes) {
-  // gets a hole at index of random number
-  const index = randNum(0, 8);
-  const hole = holes[index];
-  // if hole index matches previous hole, choose different hole.
-  if (hole === lastHole) {
-    return chooseHole(holes);
+  let max = holes.length-1;
+  if ( lastHole != -1 ) {
+    max--;
   }
-  lastHole = hole;
-  return hole;
+  let nextHole = randomInteger(0,max);
+  // console.log(`last=${lastHole} 0..${max} next=${nextHole}`);
+  if ( lastHole != -1 && ( nextHole >= lastHole )) {
+    nextHole++;
+    // console.log(`               ++next=${nextHole}`);
+  }
+  lastHole = nextHole;
+  // console.log(nextHole);
+  return holes[ nextHole ];
 }
 
 /**
@@ -213,10 +221,14 @@ function startTimer() {
 *
 */
 function whack(event) {
-  updateScore();
+  if ( testMode ||
+       (( event.target.id.substr(4) === whackable ) && !whacked )) {
+    whacked = true;
+  
+    updateScore();
+  }
   return points;
 }
-
 /**
 *
 * Adds the 'click' event listeners to the moles. See the instructions
@@ -236,6 +248,7 @@ function setEventListeners(){
 */
 function setDuration(duration) {
   time = duration;
+  timerDisplay.textContent = time;
   return time;
 }
 
