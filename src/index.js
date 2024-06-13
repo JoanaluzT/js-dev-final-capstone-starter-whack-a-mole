@@ -5,13 +5,14 @@ const startButton = document.querySelector('#start');
 const score = document.querySelector("#score"); // Use querySelector() to get the score element
 const timerDisplay = document.querySelector("#timer");// use querySelector() to get the timer element.
 
+
 let time = 0;
 let timer;
 let lastHole = -1;
 let points = 0;
 let difficulty = "easy";
 
-// added to changes made in test suite
+// added to changes made in test suite//
 let testMode = true;
 
 let whacked = false;
@@ -47,6 +48,7 @@ function randomInteger(min, max) {
  * setDelay("hard") //> returns 856 (returns a random number between 600 and 1200).
  *
  */
+// set the difficulty //
 function setDelay(difficulty) {
   if ( difficulty === 'hard' ) {
     return randomInteger(600,1200);
@@ -72,6 +74,7 @@ function setDelay(difficulty) {
  */
 const randNum = (min, max) => Math.floor(Math.random() * (max - min + 1));
 
+ // randomizes the holes which it appears //
 function chooseHole(holes) {
   let max = holes.length-1;
   if ( lastHole != -1 ) {
@@ -108,6 +111,7 @@ function chooseHole(holes) {
 *  //   return gameStopped
 *
 */
+// stops the game when time runs out //
 function gameOver() {
   return ( time > 0 ) ? showUp() : stopGame();
 }
@@ -121,7 +125,8 @@ function gameOver() {
 * delay and hole. The function needs to call `setDelay()` and `chooseHole()`
 * to call `showAndHide(hole, delay)`.
 *
-*/
+*/ 
+// how quickly the mole appears //
 function showUp() {
   let delay = setDelay(difficulty);
    const hole = chooseHole(holes);
@@ -136,6 +141,7 @@ function showUp() {
 * the timeoutID
 *
 */
+// where the mole appears to andf if its been whacked//
 function showAndHide(hole, delay){
   toggleVisibility(hole);
   whackable = hole.id.substr(4);
@@ -185,6 +191,7 @@ function updateScore() {
 * the points.
 *
 */
+// clears the points//
 function clearScore() {
   points = 0;
   score.textContent = points;
