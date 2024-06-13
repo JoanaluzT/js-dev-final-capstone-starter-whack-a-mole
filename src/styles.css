@@ -14,7 +14,7 @@ h1 {
   text-align: center;
   font-size: 90px;
   font-family: "Comic Sans MS", "Comic Sans", cursive;
-  color: white;
+  color: rgb(245, 103, 221);
   -webkit-text-stroke: 2px black;
 }
 
@@ -28,6 +28,7 @@ h2 {
 #start {
     text-align: center;
     font-size: 30px;
+    color:rgb(100, 154, 175);
 }
 
 #timer{
@@ -71,7 +72,7 @@ h2 {
   top: 100%;
   width: 100%;
   height: 100%;
-  /*transition: transform 0.5s;*/
+  transition: transform 0.5s;
   transition: all .01s;
   pointer-events:auto;
 }
