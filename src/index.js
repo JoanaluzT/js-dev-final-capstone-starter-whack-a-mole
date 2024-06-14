@@ -268,7 +268,7 @@ function setDuration(duration) {
 function stopGame(){
   // stopAudio(song);  //optional
   clearInterval(timer);
-  return "game stopped";
+  return "game ended";
 }
 
 /**
@@ -298,6 +298,7 @@ function startGame(){
 
 
 startButton.addEventListener("click", startGame);
+if ( !testMode ) setEventListeners();
 
 
 // Please do not modify the code below.
