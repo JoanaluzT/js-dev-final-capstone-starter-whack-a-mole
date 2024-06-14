@@ -37,11 +37,11 @@ h2 {
 
 .grid {
   width: 600px;
-  height: 200px;
+  height: 300px;
   display: flex;
   flex-wrap: wrap;
   margin: 0 auto;
-  cursor: url('./assets/mallet.png'), pointer;
+ /*cursor: url('./assets/mallet.png'), pointer;*/
 }
 
 .hole {
@@ -59,7 +59,7 @@ h2 {
   width: 100%;
   height: 100%;
   position: absolute;
-  bottom: -100%;
+  bottom: -50%;
   z-index: 2;
   pointer-events:none;
 }
