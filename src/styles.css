@@ -7,7 +7,7 @@ html {
   -o-background-size: cover;
   background-size: cover;
   z-index:0;
-  overflow: scroll;
+  overflow:scroll;
 }
 
 h1 {
@@ -79,5 +79,5 @@ h2 {
 
 .hole.show .mole {
   top: 0;
-  transform: scale(1.1);
+  /*transform: scale(1.1);8*/
 }
