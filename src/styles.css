@@ -37,7 +37,7 @@ h2 {
 
 .grid {
   width: 600px;
-  height: 500px;
+  height: 600px;
   display: flex;
   flex-wrap: wrap;
   margin: 0 auto;
